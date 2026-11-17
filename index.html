@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MOMENTUM — Make every moment count.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & HOROLOGICAL THEME VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-primary: #F7F5F0;
+      --bg-surface: #FFFFFF;
+      --bg-surface-subtle: #F2EFE9;
+      --text-primary: #191919;
+      --text-secondary: #85827B;
+      --text-tertiary: #A7A39B;
+      --accent: #B89B68;
+      --accent-soft: rgba(184, 155, 104, 0.14);
+      --track-bg: #E8E4DC;
+      --success: #647D68;
+      --success-soft: rgba(100, 125, 104, 0.12);
+      --hairline: rgba(25, 25, 25, 0.08);
+      --hairline-strong: rgba(25, 25, 25, 0.16);
+      --shadow-subtle: 0 18px 45px -20px rgba(25, 25, 25, 0.07);
+      --modal-backdrop: rgba(25, 25, 25, 0.42);
+    }
+
+    html.dark {
+      --bg-primary: #111111;
+      --bg-surface: #1B1B1B;
+      --bg-surface-subtle: #161616;
+      --text-primary: #F5F1E9;
+      --text-secondary: #99948B;
+      --text-tertiary: #6B6760;
+      --accent: #C5A878;
+      --accent-soft: rgba(197, 168, 120, 0.14);
+      --track-bg: #2A2825;
+      --success: #75917A;
+      --success-soft: rgba(117, 145, 122, 0.14);
+      --hairline: rgba(245, 241, 233, 0.09);
+      --hairline-strong: rgba(245, 241, 233, 0.18);
+      --shadow-subtle: 0 22px 50px -20px rgba(0, 0, 0, 0.55);
+      --modal-backdrop: rgba(0, 0, 0, 0.72);
+    }
+
+    /* ==========================================================================
+       BASE TYPOGRAPHY & SMOOTH THEME TRANSITIONS
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .font-serif-editorial {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1, "lnum" 1;
+    }
+
+    .surface-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--hairline);
+      box-shadow: var(--shadow-subtle);
+      transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.3s ease;
+    }
+
+    .hairline-b {
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .hairline-t {
+      border-top: 1px solid var(--hairline);
+    }
+
+    .hairline-border {
+      border: 1px solid var(--hairline);
+    }
+
+    /* ==========================================================================
+       HERO COUNTDOWN SCALE & RESPONSIVE PRECISION
+       ========================================================================== */
+    .countdown-numeral {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+      font-size: clamp(2.55rem, 8.2vw, 6.25rem);
+      line-height: 0.94;
+      letter-spacing: -0.025em;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1, "lnum" 1;
+    }
+
+    .countdown-colon {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+      font-size: clamp(1.75rem, 5.4vw, 4.25rem);
+      line-height: 0.94;
+      color: var(--accent);
+      opacity: 0.78;
+      transform: translateY(-0.06em);
+    }
+
+    .micro-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       HOROLOGICAL PROGRESS TRACK & TICKS
+       ========================================================================== */
+    .horological-ticks {
+      background-image: repeating-linear-gradient(
+        to right,
+        var(--hairline-strong) 0px,
+        var(--hairline-strong) 1px,
+        transparent 1px,
+        transparent 10%
+      );
+    }
+
+    /* ==========================================================================
+       CELEBRATORY PULSE & RESTRAINED MOTION
+       ========================================================================== */
+    @keyframes champagnePulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(184, 155, 104, 0.45);
+      }
+      70% {
+        box-shadow: 0 0 0 12px rgba(184, 155, 104, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(184, 155, 104, 0);
+      }
+    }
+
+    .celebrate-pulse {
+      animation: champagnePulse 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes subtleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-editorial-in {
+      animation: subtleFadeIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* ==========================================================================
+       DISTRACTION-FREE LOCK SCREEN PRESENTATION MODE
+       ========================================================================== */
+    body.presentation-mode .hide-in-presentation {
+      display: none !important;
+    }
+
+    body.presentation-mode #app-shell {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    body.presentation-mode #hero-lockscreen-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: none;
+    }
+
+    /* ==========================================================================
+       HOROLOGICAL PROGRESS TRACK, CHRONOMETER ARC & VERNIER TICKS
+       ========================================================================== */
+    .horological-ticks {
+      background-image:
+        repeating-linear-gradient(
+          to right,
+          var(--hairline-strong) 0px,
+          var(--hairline-strong) 1px,
+          transparent 1px,
+          transparent 10%
+        ),
+        repeating-linear-gradient(
+          to right,
+          var(--hairline) 0px,
+          var(--hairline) 1px,
+          transparent 1px,
+          transparent 2%
+        );
+    }
+
+    .chronometer-ring-progress {
+      transition: stroke-dashoffset 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    .seconds-sweep-ring {
+      transition: stroke-dashoffset 0.35s linear;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* ==========================================================================
+       CELEBRATORY PULSE, SVG CHECKMARK DRAW & RESTRAINED MOTION
+       ========================================================================== */
+    @keyframes champagnePulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(184, 155, 104, 0.52);
+      }
+      70% {
+        box-shadow: 0 0 0 14px rgba(184, 155, 104, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(184, 155, 104, 0);
+      }
+    }
+
+    .celebrate-pulse {
+      animation: champagnePulse 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes drawCheckStroke {
+      from {
+        stroke-dashoffset: 24;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .check-draw-path {
+      stroke-dasharray: 24;
+      stroke-dashoffset: 0;
+      animation: drawCheckStroke 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes subtleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-editorial-in {
+      animation: subtleFadeIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* ==========================================================================
+       DISTRACTION-FREE LOCK SCREEN PRESENTATION MODE
+       ========================================================================== */
+    body.presentation-mode .hide-in-presentation {
+      display: none !important;
+    }
+
+    body.presentation-mode .show-in-presentation {
+      display: flex !important;
+    }
+
+    body.presentation-mode #app-shell {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    }
+
+    body.presentation-mode #hero-lockscreen-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 1.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: none;
+    }
+
+    /* ==========================================================================
+       CUSTOM FORM INPUTS & TOUCH ACCESSIBILITY (>= 44PX TARGETS ON MOBILE)
+       ========================================================================== */
+    input[type="text"],
+    input[type="date"],
+    input[type="datetime-local"],
+    textarea {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.875rem;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s ease, background-color 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+    }
+
+    html.dark input[type="date"],
+    html.dark input[type="datetime-local"] {
+      color-scheme: dark;
+    }
+
+    @media (max-width: 640px) {
+      .touch-target {
+        min-width: 44px;
+        min-height: 44px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-[#B89B68]/20">
+  <!-- ========================================================================
+       MAIN APPLICATION SHELL (1180px Swiss Editorial Max Width)
+       ======================================================================== -->
+  <div id="app-shell" class="max-w-[1180px] mx-auto px-4 sm:px-8 md:px-12 pb-[max(4rem,env(safe-area-inset-bottom))]">
+
+    <!-- 1. TOP LOCK-SCREEN BAR (Accommodates OS lock-screen safe area) -->
+    <header
+      class="pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sm:py-6 hairline-b flex flex-wrap items-center justify-between gap-3"
+      aria-label="Timepiece Status Bar"
+    >
+      <!-- Left: MOMENTUM Wordmark -->
+      <div class="flex items-center gap-2.5">
+        <span
+          class="inline-block w-1.5 h-1.5 rounded-full"
+          style="background-color: var(--accent);"
+          aria-hidden="true"
+        ></span>
+        <span class="text-[11px] sm:text-xs font-medium tracking-[0.28em] uppercase">
+          MOMENTUM
+        </span>
+      </div>
+
+      <!-- Center: Live Local Date, Day & Clock -->
+      <div
+        id="live-clock-bar"
+        class="order-3 sm:order-2 w-full sm:w-auto flex items-center justify-center gap-2.5 text-[11px] sm:text-xs tracking-[0.14em] uppercase tabular-nums pt-2 sm:pt-0 hairline-t sm:border-t-0"
+        style="color: var(--text-secondary);"
+      >
+        <span id="live-date-display">TUESDAY, 17 NOV 2026</span>
+        <span style="color: var(--accent);">•</span>
+        <span id="live-time-display" style="color: var(--text-primary); font-weight: 500;">10:53 AM</span>
+      </div>
+
+      <!-- Right: Minimalist Controls (Theme, Presentation Mode, Configure) -->
+      <div class="order-2 sm:order-3 flex items-center gap-1.5 sm:gap-2">
+        <!-- Theme Switcher -->
+        <button
+          id="btn-theme-toggle"
+          type="button"
+          class="touch-target p-2.5 rounded-full hairline-border hover:border-[var(--accent)] transition-colors flex items-center justify-center"
+          style="background-color: var(--bg-surface);"
+          title="Switch Light / Dark Theme"
+          aria-label="Toggle Light or Dark Theme"
+        >
+          <!-- Sun Icon (shown in dark mode) -->
+          <svg id="icon-sun" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <!-- Moon Icon (shown in light mode) -->
+          <svg id="icon-moon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Distraction-Free Lock Screen Mode -->
+        <button
+          id="btn-presentation-toggle"
+          type="button"
+          class="touch-target px-3.5 py-2.5 rounded-full hairline-border hover:border-[var(--accent)] transition-colors flex items-center justify-center gap-1.5 text-[11px] tracking-[0.14em] uppercase"
+          style="background-color: var(--bg-surface);"
+          title="Enter Lock-Screen Presentation Mode"
+          aria-label="Toggle Lock-Screen Presentation Mode"
+        >
+          <svg class="w-3.5 h-3.5" style="color: var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
+          </svg>
+          <span id="presentation-btn-label" class="hidden md:inline">Lock View</span>
+        </button>
+
+        <!-- Configure Goal & Setup Modal Trigger -->
+        <button
+          id="btn-open-settings"
+          type="button"
+          class="hide-in-presentation touch-target px-3.5 py-2.5 rounded-full hairline-border hover:border-[var(--accent)] transition-colors flex items-center justify-center gap-1.5 text-[11px] tracking-[0.14em] uppercase"
+          style="background-color: var(--bg-surface);"
+          aria-label="Configure Goal and Timeline"
+        >
+          <svg class="w-3.5 h-3.5" style="color: var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>New Chapter</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. HERO LOCK-SCREEN COUNTDOWN SECTION -->
+    <section
+      id="hero-lockscreen-section"
+      class="py-10 sm:py-16 md:py-20 text-center hairline-b animate-editorial-in"
+      aria-label="Primary Countdown Display"
+    >
+      <!-- Subtle Seconds Chronometer Sweep Ring (Enhanced in Lock View) -->
+      <div class="show-in-presentation hidden items-center justify-center mb-6">
+        <div class="relative w-12 h-12 flex items-center justify-center">
+          <svg class="w-12 h-12" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="20" fill="none" stroke="var(--track-bg)" stroke-width="1.5"></circle>
+            <circle
+              id="lock-seconds-ring"
+              class="seconds-sweep-ring"
+              cx="24"
+              cy="24"
+              r="20"
+              fill="none"
+              stroke="var(--accent)"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-dasharray="125.66"
+              stroke-dashoffset="125.66"
+            ></circle>
+          </svg>
+          <span class="absolute w-1.5 h-1.5 rounded-full" style="background-color: var(--accent);"></span>
+        </div>
+      </div>
+
+      <!-- Restrained Editorial Eyebrow -->
+      <p
+        id="hero-eyebrow"
+        class="font-serif-editorial italic text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 tracking-wide"
+        style="color: var(--text-secondary);"
+      >
+        Your next chapter begins in...
+      </p>
+
+      <!-- Large Tabular Serif Countdown -->
+      <div
+        id="countdown-grid"
+        class="inline-flex items-baseline justify-center gap-1.5 sm:gap-4 md:gap-6 max-w-full px-1 select-none"
+        role="timer"
+        aria-live="off"
+      >
+        <!-- DAYS -->
+        <div class="flex flex-col items-center min-w-[3.2rem] sm:min-w-[5.5rem] md:min-w-[7.25rem]">
+          <span id="cd-days" class="countdown-numeral">142</span>
+          <span class="micro-label mt-2.5 sm:mt-3.5">DAYS</span>
+        </div>
+
+        <span class="countdown-colon" aria-hidden="true">:</span>
+
+        <!-- HOURS -->
+        <div class="flex flex-col items-center min-w-[2.75rem] sm:min-w-[4.75rem] md:min-w-[6.25rem]">
+          <span id="cd-hours" class="countdown-numeral">14</span>
+          <span class="micro-label mt-2.5 sm:mt-3.5">HOURS</span>
+        </div>
+
+        <span class="countdown-colon" aria-hidden="true">:</span>
+
+        <!-- MINUTES -->
+        <div class="flex flex-col items-center min-w-[2.75rem] sm:min-w-[4.75rem] md:min-w-[6.25rem]">
+          <span id="cd-minutes" class="countdown-numeral">28</span>
+          <span class="micro-label mt-2.5 sm:mt-3.5">MINUTES</span>
+        </div>
+
+        <span class="countdown-colon" aria-hidden="true">:</span>
+
+        <!-- SECONDS -->
+        <div class="flex flex-col items-center min-w-[2.75rem] sm:min-w-[4.75rem] md:min-w-[6.25rem]">
+          <span id="cd-seconds" class="countdown-numeral">45</span>
+          <span class="micro-label mt-2.5 sm:mt-3.5">SECONDS</span>
+        </div>
+      </div>
+
+      <!-- Expired Deadline Graceful Banner (Hidden unless deadline reached) -->
+      <div
+        id="deadline-reached-banner"
+        class="hidden max-w-lg mx-auto mt-7 px-6 py-5 rounded-2xl hairline-border"
+        style="background-color: var(--accent-soft);"
+      >
+        <span class="micro-label block mb-1" style="color: var(--success);">MILESTONE REACHED</span>
+        <p class="font-serif-editorial italic text-xl sm:text-2xl" style="color: var(--text-primary);">
+          Chapter Arrived. Every intentional day led here.
+        </p>
+        <button
+          id="btn-begin-next-chapter"
+          type="button"
+          class="hide-in-presentation mt-4 px-5 py-2.5 rounded-full text-[11px] font-medium tracking-[0.16em] uppercase text-white transition-opacity hover:opacity-90"
+          style="background-color: var(--accent);"
+        >
+          Begin Next Chapter
+        </button>
+      </div>
+
+      <!-- Goal Title, Description & Target Date -->
+      <div class="mt-9 sm:mt-12 max-w-xl mx-auto px-2">
+        <div class="inline-flex items-center gap-2 mb-2.5">
+          <span class="w-4 h-[1px]" style="background-color: var(--accent);"></span>
+          <span class="micro-label" style="color: var(--accent);">TARGET HORIZON</span>
+          <span class="w-4 h-[1px]" style="background-color: var(--accent);"></span>
+        </div>
+
+        <h1
+          id="hero-goal-title"
+          class="font-serif-editorial text-2xl sm:text-4xl md:text-[2.65rem] font-normal tracking-[0.06em] uppercase leading-tight"
+        >
+          THE NEXT CHAPTER
+        </h1>
+
+        <p
+          id="hero-goal-subtitle"
+          class="mt-2.5 text-sm sm:text-base font-light leading-relaxed"
+          style="color: var(--text-secondary);"
+        >
+          Publish the first edition &amp; launch the independent design studio
+        </p>
+
+        <div class="mt-4 inline-flex flex-wrap items-center justify-center gap-2 text-xs tracking-[0.16em] uppercase tabular-nums" style="color: var(--text-secondary);">
+          <span id="hero-deadline-formatted">08 APRIL 2027 • 09:00 AM</span>
+        </div>
+      </div>
+
+      <!-- Compact Lock-Screen Vernier Progress Strip (Visible in both standard & presentation modes) -->
+      <div class="mt-9 sm:mt-11 max-w-md mx-auto px-4">
+        <div class="flex items-center justify-between text-[10px] tracking-[0.18em] uppercase tabular-nums mb-2" style="color: var(--text-secondary);">
+          <span>JOURNEY ELAPSED</span>
+          <span id="hero-progress-pct" style="color: var(--accent); font-weight: 600;">21.1%</span>
+        </div>
+        <div class="relative w-full h-[4px] rounded-full overflow-visible" style="background-color: var(--track-bg);">
+          <div
+            id="hero-progress-fill"
+            class="h-full rounded-full transition-all duration-700 ease-out relative"
+            style="width: 21.1%; background-color: var(--accent);"
+          >
+            <!-- Champagne-gold watchmaker indicator needle tip -->
+            <span
+              class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-2 h-2 rounded-full ring-2 ring-[var(--bg-primary)]"
+              style="background-color: var(--accent);"
+            ></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ASYMMETRIC SWISS EDITORIAL GRID (Desktop Sticky Left Rail + Right Timeline / Mobile Single Column) -->
+    <main class="hide-in-presentation mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 items-start">
+
+      <!-- LEFT COLUMN (5 Cols on Desktop, Sticky): Chronometer Progress + Next Milestone + Today Matters -->
+      <div class="lg:col-span-5 lg:sticky lg:top-8 flex flex-col gap-7 sm:gap-8">
+
+        <!-- A. HOROLOGICAL CHRONOMETER PROGRESS CARD (Strictly Separated Metrics) -->
+        <section class="surface-card rounded-2xl p-6 sm:p-7" aria-labelledby="progress-section-heading">
+          <div class="flex items-center justify-between mb-5">
+            <h2 id="progress-section-heading" class="micro-label">HOROLOGICAL PROGRESS</h2>
+            <span class="text-[11px] font-serif-editorial italic" style="color: var(--text-secondary);">
+              Time vs. Execution
+            </span>
+          </div>
+
+          <!-- Precision Chronometer Arc + Time Elapsed -->
+          <div class="flex items-center gap-5">
+            <!-- Radial Chronometer Gauge -->
+            <div class="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 flex items-center justify-center">
+              <svg class="w-full h-full" viewBox="0 0 112 112" aria-hidden="true">
+                <!-- Outer Calibrated Dial Hairline -->
+                <circle
+                  cx="56"
+                  cy="56"
+                  r="52"
+                  fill="none"
+                  stroke="var(--hairline)"
+                  stroke-width="1"
+                  stroke-dasharray="2 4.5"
+                ></circle>
+                <!-- Base Track -->
+                <circle
+                  cx="56"
+                  cy="56"
+                  r="44"
+                  fill="none"
+                  stroke="var(--track-bg)"
+                  stroke-width="3.5"
+                ></circle>
+                <!-- Active Champagne Gold Arc (Circumference = 2 * PI * 44 = 276.46) -->
+                <circle
+                  id="chronometer-arc-circle"
+                  class="chronometer-ring-progress"
+                  cx="56"
+                  cy="56"
+                  r="44"
+                  fill="none"
+                  stroke="var(--accent)"
+                  stroke-width="3.5"
+                  stroke-linecap="round"
+                  stroke-dasharray="276.46"
+                  stroke-dashoffset="218"
+                ></circle>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span id="time-elapsed-pct" class="font-serif-editorial text-xl sm:text-2xl tabular-nums leading-none" style="color: var(--accent);">
+                  21.1%
+                </span>
+                <span class="text-[8px] tracking-[0.18em] uppercase mt-1" style="color: var(--text-secondary);">
+                  ELAPSED
+                </span>
+              </div>
+            </div>
+
+            <!-- Linear Vernier Scale & Journey Summary -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-baseline justify-between mb-1.5">
+                <span class="text-xs font-medium tracking-wide">Time Horizon</span>
+                <span id="stat-days-remaining-inline" class="text-[11px] tracking-[0.12em] uppercase tabular-nums" style="color: var(--accent);">
+                  142D LEFT
+                </span>
+              </div>
+
+              <!-- Horological Vernier Bar with Major & Minor Tick Marks -->
+              <div class="relative w-full h-3 rounded-full overflow-hidden" style="background-color: var(--track-bg);">
+                <div
+                  id="time-progress-bar"
+                  class="h-full rounded-full transition-all duration-700 ease-out"
+                  style="width: 21.1%; background-color: var(--accent);"
+                ></div>
+                <div class="absolute inset-0 horological-ticks pointer-events-none"></div>
+              </div>
+
+              <!-- Sub-metrics: Days Elapsed / Total Days / Days Remaining -->
+              <div class="grid grid-cols-3 gap-1.5 mt-3.5 pt-3 hairline-t text-center tabular-nums">
+                <div>
+                  <p id="stat-days-elapsed" class="text-sm font-medium">38</p>
+                  <p class="text-[9px] tracking-[0.14em] uppercase mt-0.5" style="color: var(--text-secondary);">Elapsed</p>
+                </div>
+                <div class="hairline-border border-y-0">
+                  <p id="stat-total-days" class="text-sm font-medium">180</p>
+                  <p class="text-[9px] tracking-[0.14em] uppercase mt-0.5" style="color: var(--text-secondary);">Total</p>
+                </div>
+                <div>
+                  <p id="stat-days-remaining" class="text-sm font-medium" style="color: var(--accent);">142</p>
+                  <p class="text-[9px] tracking-[0.14em] uppercase mt-0.5" style="color: var(--text-secondary);">Left</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hairline Divider -->
+          <div class="my-5 hairline-t"></div>
+
+          <!-- Metric 2: Milestone Completion Progress (Strictly Separate) -->
+          <div>
+            <div class="flex items-baseline justify-between mb-2">
+              <div>
+                <span class="text-xs font-medium tracking-wide">Milestone Completion</span>
+                <span id="milestone-fraction-label" class="block text-[11px] mt-0.5 tabular-nums" style="color: var(--text-secondary);">
+                  2 of 5 chapters completed
+                </span>
+              </div>
+              <span id="milestone-completion-pct" class="font-serif-editorial text-2xl tabular-nums" style="color: var(--success);">
+                40%
+              </span>
+            </div>
+
+            <!-- Segmented Milestone Bar -->
+            <div id="milestone-segmented-track" class="grid grid-cols-5 gap-1.5 mt-2.5" aria-hidden="true">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- B. "TODAY MATTERS" DAILY FOCUS SECTION -->
+        <section class="surface-card rounded-2xl p-6 sm:p-7" aria-labelledby="today-matters-heading">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full" style="background-color: var(--accent);"></span>
+              <h2 id="today-matters-heading" class="micro-label">TODAY MATTERS</h2>
+            </div>
+            <button
+              id="btn-edit-daily-focus"
+              type="button"
+              class="touch-target text-[11px] tracking-[0.14em] uppercase hover:underline transition-opacity opacity-80 hover:opacity-100 py-1.5 px-2.5"
+              style="color: var(--accent);"
+            >
+              Edit Focus
+            </button>
+          </div>
+
+          <!-- Display View for Daily Focus -->
+          <div id="daily-focus-view">
+            <div class="flex items-start gap-3.5">
+              <!-- Custom Tactile Completion Checkbox -->
+              <button
+                id="btn-toggle-daily-task"
+                type="button"
+                role="checkbox"
+                aria-checked="false"
+                aria-label="Mark daily focus task complete"
+                class="mt-0.5 w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-300 cursor-pointer"
+                style="border: 1.5px solid var(--accent); background-color: transparent;"
+              >
+                <svg
+                  id="daily-task-check-icon"
+                  class="w-3.5 h-3.5 text-white opacity-0 transition-opacity duration-200"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </button>
+
+              <div class="flex-1 min-w-0">
+                <p class="text-[10px] uppercase tracking-[0.18em] mb-1" style="color: var(--text-secondary);">
+                  Today's Intention (Click text to refine)
+                </p>
+                <h3
+                  id="daily-task-title"
+                  title="Click to edit today's intention"
+                  class="font-serif-editorial text-xl sm:text-2xl leading-snug transition-all duration-300 cursor-pointer hover:opacity-80"
+                >
+                  Finalize the typography specimen &amp; layout grid for Chapter One
+                </h3>
+                <p
+                  id="daily-task-note"
+                  title="Click to edit supporting reflection"
+                  class="mt-2 text-xs sm:text-sm font-light italic cursor-pointer hover:opacity-80"
+                  style="color: var(--text-secondary);"
+                >
+                  "Small progress is still progress."
+                </p>
+              </div>
+            </div>
+
+            <!-- Subtle Daily Status & Streak Footer -->
+            <div class="mt-5 pt-4 hairline-t flex items-center justify-between gap-2 text-[11px]" style="color: var(--text-secondary);">
+              <span id="daily-focus-status-text">Intentional focus active</span>
+              <span id="daily-streak-badge" class="tracking-[0.14em] uppercase tabular-nums">
+                1 PRIORITY / DAY
+              </span>
+            </div>
+          </div>
+
+          <!-- Inline Edit Form for Daily Focus -->
+          <form id="daily-focus-form" class="hidden space-y-3.5">
+            <div>
+              <label for="input-daily-title" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+                Today's Priority Intention
+              </label>
+              <input
+                id="input-daily-title"
+                type="text"
+                maxlength="120"
+                required
+                placeholder="What single action matters most today?"
+              />
+            </div>
+            <div>
+              <label for="input-daily-note" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+                Supporting Mantra or Note
+              </label>
+              <input
+                id="input-daily-note"
+                type="text"
+                maxlength="140"
+                placeholder="Small progress is still progress."
+              />
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-1">
+              <button
+                id="btn-cancel-daily-focus"
+                type="button"
+                class="touch-target px-3.5 py-2 rounded-lg text-xs tracking-wider uppercase"
+                style="color: var(--text-secondary);"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="touch-target px-4 py-2 rounded-lg text-xs font-medium tracking-wider uppercase text-white"
+                style="background-color: var(--accent);"
+              >
+                Save Intention
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN (7 Cols on Desktop): "YOUR NEXT MILESTONE" + MILESTONE TIMELINE -->
+      <div class="lg:col-span-7 flex flex-col gap-7 sm:gap-8">
+
+        <!-- A. "YOUR NEXT MILESTONE" SPOTLIGHT -->
+        <section
+          id="next-milestone-spotlight"
+          class="surface-card rounded-2xl p-6 sm:p-7 relative overflow-hidden"
+          aria-labelledby="next-milestone-heading"
+        >
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full" style="background-color: var(--accent);"></span>
+              <h2 id="next-milestone-heading" class="micro-label" style="color: var(--accent);">
+                YOUR NEXT MILESTONE
+              </h2>
+            </div>
+            <span
+              id="next-milestone-countdown-badge"
+              class="px-3 py-1 rounded-full text-[11px] font-medium tracking-[0.14em] uppercase tabular-nums"
+              style="background-color: var(--accent-soft); color: var(--accent);"
+            >
+              IN 12 DAYS
+            </span>
+          </div>
+
+          <div id="next-milestone-content" class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <p id="next-milestone-index" class="text-[11px] tracking-[0.2em] uppercase tabular-nums mb-1" style="color: var(--text-secondary);">
+                CHAPTER 03
+              </p>
+              <h3 id="next-milestone-title" class="font-serif-editorial text-2xl sm:text-3xl font-normal">
+                03 — HALF-WAY POINT
+              </h3>
+              <p id="next-milestone-desc" class="mt-1.5 text-xs sm:text-sm font-light" style="color: var(--text-secondary);">
+                Complete full manuscript review and refine visual direction.
+              </p>
+            </div>
+
+            <div class="sm:text-right flex-shrink-0 pt-2 sm:pt-0 hairline-t sm:border-t-0">
+              <span class="block text-[10px] tracking-[0.16em] uppercase" style="color: var(--text-secondary);">
+                TARGET DATE
+              </span>
+              <span id="next-milestone-date" class="text-xs sm:text-sm font-medium tracking-wider uppercase tabular-nums">
+                29 NOV 2026
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- B. MILESTONE JOURNEY TIMELINE -->
+        <section class="surface-card rounded-2xl p-6 sm:p-8" aria-labelledby="timeline-heading">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 hairline-b">
+            <div>
+              <h2 id="timeline-heading" class="micro-label">MILESTONE JOURNEY</h2>
+              <p class="text-xs mt-1 font-light" style="color: var(--text-secondary);">
+                Chronological checkpoints toward your horizon
+              </p>
+            </div>
+
+            <button
+              id="btn-add-milestone"
+              type="button"
+              class="touch-target px-4 py-2.5 rounded-full hairline-border hover:border-[var(--accent)] transition-colors flex items-center gap-1.5 text-[11px] tracking-[0.14em] uppercase"
+              style="background-color: var(--bg-primary);"
+            >
+              <span style="color: var(--accent); font-size: 14px; line-height: 1;">+</span>
+              <span>Add Milestone</span>
+            </button>
+          </div>
+
+          <!-- Vertical Editorial Timeline List -->
+          <div id="milestone-timeline-list" class="relative space-y-0">
+            <!-- Dynamically rendered milestone items -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer Tagline -->
+    <footer class="hide-in-presentation mt-14 sm:mt-20 pt-6 hairline-t flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] tracking-[0.18em] uppercase" style="color: var(--text-secondary);">
+      <span>MOMENTUM — PERSONAL TIMEPIECE</span>
+      <span class="font-serif-editorial italic normal-case text-sm tracking-normal">
+        Make every moment count.
+      </span>
+    </footer>
+  </div>
+
+  <!-- ========================================================================
+       FLOATING EXIT BUTTON FOR DISTRACTION-FREE LOCK-SCREEN MODE
+       ======================================================================== -->
+  <button
+    id="btn-exit-presentation"
+    type="button"
+    class="hidden touch-target fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-40 px-6 py-3 rounded-full hairline-border backdrop-blur-md text-[11px] tracking-[0.18em] uppercase shadow-lg transition-opacity opacity-85 hover:opacity-100"
+    style="background-color: var(--bg-surface); color: var(--text-primary);"
+  >
+    Exit Lock View
+  </button>
+
+  <!-- ========================================================================
+       GOAL & HORIZON CONFIGURATION MODAL (Includes Editorial Presets)
+       ======================================================================== -->
+  <div
+    id="settings-modal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+    style="background-color: var(--modal-backdrop); backdrop-filter: blur(6px);"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="settings-modal-title"
+  >
+    <div
+      class="surface-card w-full max-w-lg rounded-2xl p-6 sm:p-8 my-auto animate-editorial-in"
+      style="background-color: var(--bg-surface);"
+    >
+      <div class="flex items-center justify-between pb-4 hairline-b">
+        <div>
+          <span class="micro-label" style="color: var(--accent);">HORIZON CONFIGURATION</span>
+          <h2 id="settings-modal-title" class="font-serif-editorial text-2xl sm:text-3xl mt-0.5">
+            Define Your Next Chapter
+          </h2>
+        </div>
+        <button
+          id="btn-close-settings"
+          type="button"
+          class="touch-target p-2.5 rounded-full hairline-border hover:border-[var(--accent)] flex items-center justify-center"
+          aria-label="Close configuration modal"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Curated Chapter Preset Templates -->
+      <div class="mt-4">
+        <span class="block text-[10px] tracking-[0.16em] uppercase mb-2" style="color: var(--text-secondary);">
+          Editorial Chapter Presets
+        </span>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            type="button"
+            data-preset="studio"
+            class="preset-btn px-2.5 py-2 rounded-xl hairline-border hover:border-[var(--accent)] text-[10px] tracking-[0.12em] uppercase text-center transition-colors"
+            style="background-color: var(--bg-primary);"
+          >
+            Creative Launch
+          </button>
+          <button
+            type="button"
+            data-preset="marathon"
+            class="preset-btn px-2.5 py-2 rounded-xl hairline-border hover:border-[var(--accent)] text-[10px] tracking-[0.12em] uppercase text-center transition-colors"
+            style="background-color: var(--bg-primary);"
+          >
+            Endurance Arc
+          </button>
+          <button
+            type="button"
+            data-preset="sabbatical"
+            class="preset-btn px-2.5 py-2 rounded-xl hairline-border hover:border-[var(--accent)] text-[10px] tracking-[0.12em] uppercase text-center transition-colors"
+            style="background-color: var(--bg-primary);"
+          >
+            Mastery Study
+          </button>
+        </div>
+      </div>
+
+      <form id="settings-form" class="mt-4 space-y-4">
+        <div>
+          <label for="cfg-goal-title" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+            Personal Goal Title
+          </label>
+          <input id="cfg-goal-title" type="text" maxlength="60" required placeholder="e.g., THE NEXT CHAPTER" />
+        </div>
+
+        <div>
+          <label for="cfg-goal-subtitle" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+            Meaningful Description
+          </label>
+          <input id="cfg-goal-subtitle" type="text" maxlength="140" placeholder="A concise statement of purpose" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label for="cfg-start-date" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+              Journey Start Date &amp; Time
+            </label>
+            <input id="cfg-start-date" type="datetime-local" required />
+          </div>
+          <div>
+            <label for="cfg-deadline-date" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+              Target Deadline Date &amp; Time
+            </label>
+            <input id="cfg-deadline-date" type="datetime-local" required />
+          </div>
+        </div>
+
+        <p id="cfg-validation-msg" class="hidden text-xs text-red-500"></p>
+
+        <!-- Quick Setup Option: Auto-generate 5 balanced milestones -->
+        <label class="p-3.5 rounded-xl hairline-border flex items-center justify-between gap-3 cursor-pointer" style="background-color: var(--bg-primary);">
+          <div>
+            <p class="text-xs font-medium">Auto-calibrate 5 Journey Checkpoints</p>
+            <p class="text-[11px] font-light" style="color: var(--text-secondary);">
+              Distribute milestone dates evenly between start and deadline
+            </p>
+          </div>
+          <input id="cfg-recalibrate-milestones" type="checkbox" class="w-4 h-4 accent-[#B89B68] cursor-pointer" />
+        </label>
+
+        <div class="pt-4 hairline-t flex flex-wrap items-center justify-between gap-3">
+          <button
+            id="btn-reset-defaults"
+            type="button"
+            class="text-[11px] tracking-[0.14em] uppercase underline opacity-75 hover:opacity-100 py-1.5"
+            style="color: var(--text-secondary);"
+          >
+            Reset to Demo
+          </button>
+
+          <div class="flex items-center gap-2.5">
+            <button
+              id="btn-cancel-settings"
+              type="button"
+              class="touch-target px-4 py-2.5 rounded-xl text-xs tracking-wider uppercase"
+              style="color: var(--text-secondary);"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="touch-target px-5 py-2.5 rounded-xl text-xs font-medium tracking-[0.14em] uppercase text-white"
+              style="background-color: var(--accent);"
+            >
+              Save Horizon
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       ADD / EDIT MILESTONE MODAL
+       ======================================================================== -->
+  <div
+    id="milestone-modal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+    style="background-color: var(--modal-backdrop); backdrop-filter: blur(6px);"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="milestone-modal-title"
+  >
+    <div
+      class="surface-card w-full max-w-md rounded-2xl p-6 sm:p-8 my-auto animate-editorial-in"
+      style="background-color: var(--bg-surface);"
+    >
+      <div class="flex items-center justify-between pb-4 hairline-b">
+        <div>
+          <span class="micro-label" style="color: var(--accent);">CHECKPOINT</span>
+          <h2 id="milestone-modal-title" class="font-serif-editorial text-2xl mt-0.5">
+            Add Milestone
+          </h2>
+        </div>
+        <button
+          id="btn-close-milestone-modal"
+          type="button"
+          class="touch-target p-2.5 rounded-full hairline-border hover:border-[var(--accent)] flex items-center justify-center"
+          aria-label="Close milestone modal"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="milestone-form" class="mt-5 space-y-4">
+        <input type="hidden" id="ms-edit-id" value="" />
+
+        <div>
+          <label for="ms-title" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+            Milestone Title
+          </label>
+          <input id="ms-title" type="text" maxlength="70" required placeholder="e.g., FIRST BREAKTHROUGH" />
+        </div>
+
+        <div>
+          <label for="ms-date" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+            Target Date
+          </label>
+          <input id="ms-date" type="date" required />
+        </div>
+
+        <div>
+          <label for="ms-desc" class="block text-[10px] tracking-[0.16em] uppercase mb-1.5" style="color: var(--text-secondary);">
+            Short Description
+          </label>
+          <textarea id="ms-desc" rows="2" maxlength="160" placeholder="What defines completion for this stage?"></textarea>
+        </div>
+
+        <div class="pt-3 hairline-t flex items-center justify-end gap-2.5">
+          <button
+            id="btn-cancel-milestone"
+            type="button"
+            class="touch-target px-4 py-2.5 rounded-xl text-xs tracking-wider uppercase"
+            style="color: var(--text-secondary);"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="touch-target px-5 py-2.5 rounded-xl text-xs font-medium tracking-[0.14em] uppercase text-white"
+            style="background-color: var(--accent);"
+          >
+            Save Milestone
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SUBTLE TOAST NOTIFICATION (Replaces alert/confirm)
+       ======================================================================== -->
+  <div
+    id="toast-banner"
+    class="pointer-events-none fixed bottom-6 right-6 z-50 opacity-0 translate-y-2 transition-all duration-300 px-4 py-2.5 rounded-xl hairline-border text-xs tracking-wider shadow-lg"
+    style="background-color: var(--bg-surface); color: var(--text-primary);"
+    role="status"
+    aria-live="polite"
+  >
+    Saved
+  </div>
+
+  <!-- ========================================================================
+       APPLICATION LOGIC & HOROLOGICAL ENGINE
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      const STORAGE_KEY = 'momentum_horological_state_v2';
+      const CHRONOMETER_CIRCUMFERENCE = 2 * Math.PI * 44; // 276.46
+      const LOCK_RING_CIRCUMFERENCE = 2 * Math.PI * 20;   // 125.66
+
+      // Strict Local-Timezone Date Parsing Helpers (Prevents UTC Midnight Shift)
+      function parseLocalDate(yyyyMmDd) {
+        if (!yyyyMmDd || typeof yyyyMmDd !== 'string') return new Date();
+        const parts = yyyyMmDd.split('-');
+        if (parts.length !== 3) return new Date(yyyyMmDd);
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        return new Date(y, m, d, 0, 0, 0, 0);
+      }
+
+      function parseLocalDateTime(dateTimeStr) {
+        if (!dateTimeStr) return new Date(NaN);
+        const [datePart, timePart] = dateTimeStr.split('T');
+        if (!datePart) return new Date(dateTimeStr);
+        const [y, m, d] = datePart.split('-').map((n) => parseInt(n, 10));
+        let hh = 0;
+        let mm = 0;
+        if (timePart) {
+          const timePieces = timePart.split(':');
+          hh = parseInt(timePieces[0], 10) || 0;
+          mm = parseInt(timePieces[1], 10) || 0;
+        }
+        return new Date(y, m - 1, d, hh, mm, 0, 0);
+      }
+
+      // Helper to format Date object to YYYY-MM-DDTHH:mm for datetime-local input
+      function toLocalDateTimeInput(dateObj) {
+        const pad = (n) => String(n).padStart(2, '0');
+        return (
+          dateObj.getFullYear() +
+          '-' +
+          pad(dateObj.getMonth() + 1) +
+          '-' +
+          pad(dateObj.getDate()) +
+          'T' +
+          pad(dateObj.getHours()) +
+          ':' +
+          pad(dateObj.getMinutes())
+        );
+      }
+
+      // Helper to format Date object to YYYY-MM-DD in local time
+      function toLocalDateInput(dateObj) {
+        const pad = (n) => String(n).padStart(2, '0');
+        return (
+          dateObj.getFullYear() +
+          '-' +
+          pad(dateObj.getMonth() + 1) +
+          '-' +
+          pad(dateObj.getDate())
+        );
+      }
+
+      // Generate sensible dynamic default state (~142 days remaining out of a 180-day arc)
+      function createDefaultState() {
+        const now = new Date();
+        const todayStr = toLocalDateInput(now);
+
+        // Start date: 38 days ago at 09:00 local
+        const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 38, 9, 0, 0, 0);
+        // Deadline: 142 days ahead at 09:00 local (180-day total arc)
+        const deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 142, 9, 0, 0, 0);
+
+        const span = deadline.getTime() - start.getTime();
+        const atRatio = (r) => toLocalDateInput(new Date(start.getTime() + span * r));
+
+        return {
+          version: 2,
+          theme: 'light',
+          goalTitle: 'THE NEXT CHAPTER',
+          goalSubtitle: 'Publish the first edition & launch the independent design studio',
+          startISO: start.toISOString(),
+          deadlineISO: deadline.toISOString(),
+          dailyFocus: {
+            title: 'Finalize the typography specimen & layout grid for Chapter One',
+            note: '"Small progress is still progress."',
+            completed: false,
+            lastActiveDate: todayStr,
+            completedDaysCount: 14
+          },
+          milestones: [
+            {
+              id: 'ms-1',
+              title: 'THE BEGINNING',
+              date: atRatio(0.04),
+              description: 'Define the core vision, creative direction, and architectural blueprint.',
+              completed: true
+            },
+            {
+              id: 'ms-2',
+              title: 'FIRST BREAKTHROUGH',
+              date: atRatio(0.19),
+              description: 'Complete foundational prototypes and validate core aesthetic direction.',
+              completed: true
+            },
+            {
+              id: 'ms-3',
+              title: 'HALF-WAY POINT',
+              date: atRatio(0.50),
+              description: 'Full manuscript audit, structural refinement, and mid-journey calibration.',
+              completed: false
+            },
+            {
+              id: 'ms-4',
+              title: 'FINAL PREPARATION',
+              date: atRatio(0.84),
+              description: 'Polish every detail, test across all formats, and prepare release assets.',
+              completed: false
+            },
+            {
+              id: 'ms-5',
+              title: 'THE BIG DAY',
+              date: toLocalDateInput(deadline),
+              description: 'Unveil the finished work to the world with clarity and conviction.',
+              completed: false
+            }
+          ]
+        };
+      }
+
+      // Automatic Daily Rollover Check (Resets daily checkbox on new calendar day while keeping completed days history)
+      function reconcileDailyRollover(targetState) {
+        const todayStr = toLocalDateInput(new Date());
+        if (!targetState.dailyFocus) {
+          targetState.dailyFocus = {
+            title: 'Complete the single most meaningful step toward your horizon',
+            note: '"Small progress is still progress."',
+            completed: false,
+            lastActiveDate: todayStr,
+            completedDaysCount: 0
+          };
+          return false;
+        }
+        if (typeof targetState.dailyFocus.completedDaysCount !== 'number') {
+          targetState.dailyFocus.completedDaysCount = targetState.dailyFocus.completed ? 1 : 0;
+        }
+        if (targetState.dailyFocus.lastActiveDate !== todayStr) {
+          targetState.dailyFocus.lastActiveDate = todayStr;
+          targetState.dailyFocus.completed = false;
+          return true;
+        }
+        return false;
+      }
+
+      // Load or initialize persistent state
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return createDefaultState();
+          const parsed = JSON.parse(raw);
+          if (!parsed || !parsed.deadlineISO || !Array.isArray(parsed.milestones)) {
+            return createDefaultState();
+          }
+          reconcileDailyRollover(parsed);
+          return parsed;
+        } catch (e) {
+          return createDefaultState();
+        }
+      }
+
+      let state = loadState();
+      let pendingDeleteId = null;
+      let toastTimeout = null;
+      let lastCompletedMilestoneId = null;
+
+      function saveState(toastMessage) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          // Handle storage quota gracefully
+        }
+        if (toastMessage) showToast(toastMessage);
+      }
+
+      function showToast(msg) {
+        const el = document.getElementById('toast-banner');
+        el.textContent = msg;
+        el.classList.remove('opacity-0', 'translate-y-2');
+        el.classList.add('opacity-100', 'translate-y-0');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          el.classList.remove('opacity-100', 'translate-y-0');
+          el.classList.add('opacity-0', 'translate-y-2');
+        }, 2300);
+      }
+
+      // ======================================================================
+      // THEME MANAGEMENT
+      // ======================================================================
+      function applyTheme(theme) {
+        const htmlEl = document.documentElement;
+        const sunIcon = document.getElementById('icon-sun');
+        const moonIcon = document.getElementById('icon-moon');
+        if (theme === 'dark') {
+          htmlEl.classList.add('dark');
+          htmlEl.classList.remove('light');
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+        } else {
+          htmlEl.classList.remove('dark');
+          htmlEl.classList.add('light');
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+        }
+      }
+
+      document.getElementById('btn-theme-toggle').addEventListener('click', () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(state.theme);
+        saveState(state.theme === 'dark' ? 'Nocturne Dark Theme' : 'Editorial Ivory Theme');
+      });
+
+      // ======================================================================
+      // DISTRACTION-FREE LOCK-SCREEN PRESENTATION MODE (With Fullscreen API)
+      // ======================================================================
+      const exitPresBtn = document.getElementById('btn-exit-presentation');
+      function setPresentationMode(active) {
+        if (active) {
+          document.body.classList.add('presentation-mode');
+          exitPresBtn.classList.remove('hidden');
+          document.getElementById('presentation-btn-label').textContent = 'Exit Lock';
+          if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(() => {});
+          }
+        } else {
+          document.body.classList.remove('presentation-mode');
+          exitPresBtn.classList.add('hidden');
+          document.getElementById('presentation-btn-label').textContent = 'Lock View';
+          if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          }
+        }
+      }
+
+      document.getElementById('btn-presentation-toggle').addEventListener('click', () => {
+        const isCurrentlyActive = document.body.classList.contains('presentation-mode');
+        setPresentationMode(!isCurrentlyActive);
+      });
+
+      exitPresBtn.addEventListener('click', () => setPresentationMode(false));
+
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement && document.body.classList.contains('presentation-mode')) {
+          document.body.classList.remove('presentation-mode');
+          exitPresBtn.classList.add('hidden');
+          document.getElementById('presentation-btn-label').textContent = 'Lock View';
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (document.body.classList.contains('presentation-mode')) {
+            setPresentationMode(false);
+          }
+          closeSettingsModal();
+          closeMilestoneModal();
+          const dailyForm = document.getElementById('daily-focus-form');
+          if (!dailyForm.classList.contains('hidden')) {
+            dailyForm.classList.add('hidden');
+            document.getElementById('daily-focus-view').classList.remove('hidden');
+          }
+        }
+      });
+
+      // ======================================================================
+      // DATE & COUNTDOWN ENGINE (Strict Local Timestamp Diffs)
+      // ======================================================================
+      const MONTHS_SHORT = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      const MONTHS_LONG = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+      const DAYS_LONG = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+
+      function formatLongDeadline(isoStr) {
+        const d = new Date(isoStr);
+        if (isNaN(d.getTime())) return '';
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = MONTHS_LONG[d.getMonth()];
+        const year = d.getFullYear();
+        const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        return `${day} ${month} ${year} • ${time}`;
+      }
+
+      function formatShortMilestoneDate(yyyyMmDd) {
+        if (!yyyyMmDd) return '';
+        const parts = yyyyMmDd.split('-');
+        if (parts.length !== 3) return yyyyMmDd;
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        return `${String(d).padStart(2, '0')} ${MONTHS_SHORT[m] || ''} ${y}`;
+      }
+
+      function updateLiveTimepiece() {
+        const now = new Date();
+        const nowMs = now.getTime();
+
+        // Reconcile daily focus automatically if midnight has passed
+        if (reconcileDailyRollover(state)) {
+          saveState();
+          renderDailyFocus();
+        }
+
+        // 1. Update Top Lock-Screen Date & Clock
+        const dayName = DAYS_LONG[now.getDay()];
+        const dateNum = String(now.getDate()).padStart(2, '0');
+        const monthShort = MONTHS_SHORT[now.getMonth()];
+        const yearNum = now.getFullYear();
+        document.getElementById('live-date-display').textContent = `${dayName}, ${dateNum} ${monthShort} ${yearNum}`;
+        document.getElementById('live-time-display').textContent = now.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        // Update Lock-View Seconds Sweep Ring
+        const lockRing = document.getElementById('lock-seconds-ring');
+        if (lockRing) {
+          const secProgress = (now.getSeconds() + now.getMilliseconds() / 1000) / 60;
+          lockRing.style.strokeDashoffset = String(LOCK_RING_CIRCUMFERENCE * (1 - secProgress));
+        }
+
+        // 2. Calculate Countdown from Target Timestamp
+        const startMs = new Date(state.startISO).getTime();
+        const deadlineMs = new Date(state.deadlineISO).getTime();
+        const diffMs = deadlineMs - nowMs;
+
+        const eyebrowEl = document.getElementById('hero-eyebrow');
+        const reachedBanner = document.getElementById('deadline-reached-banner');
+
+        if (diffMs <= 0) {
+          document.getElementById('cd-days').textContent = '000';
+          document.getElementById('cd-hours').textContent = '00';
+          document.getElementById('cd-minutes').textContent = '00';
+          document.getElementById('cd-seconds').textContent = '00';
+          eyebrowEl.textContent = 'Horizon reached';
+          reachedBanner.classList.remove('hidden');
+        } else {
+          eyebrowEl.textContent = 'Your next chapter begins in...';
+          reachedBanner.classList.add('hidden');
+
+          const totalSeconds = Math.floor(diffMs / 1000);
+          const days = Math.floor(totalSeconds / 86400);
+          const hours = Math.floor((totalSeconds % 86400) / 3600);
+          const minutes = Math.floor((totalSeconds % 3600) / 60);
+          const seconds = totalSeconds % 60;
+
+          document.getElementById('cd-days').textContent = days >= 100 ? String(days) : String(days).padStart(3, '0');
+          document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+          document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+          document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // 3. Calculate Time Elapsed Progress strictly from Start & Deadline timestamps
+        const totalDuration = Math.max(1, deadlineMs - startMs);
+        const elapsedDuration = Math.min(totalDuration, Math.max(0, nowMs - startMs));
+        const pct = (elapsedDuration / totalDuration) * 100;
+        const pctFormatted = pct.toFixed(1) + '%';
+
+        document.getElementById('hero-progress-pct').textContent = pctFormatted;
+        document.getElementById('hero-progress-fill').style.width = `${pct}%`;
+        document.getElementById('time-elapsed-pct').textContent = pctFormatted;
+        document.getElementById('time-progress-bar').style.width = `${pct}%`;
+
+        // Update Radial Chronometer Gauge Arc
+        const arcCircle = document.getElementById('chronometer-arc-circle');
+        if (arcCircle) {
+          const offset = CHRONOMETER_CIRCUMFERENCE * (1 - pct / 100);
+          arcCircle.style.strokeDashoffset = offset.toFixed(2);
+        }
+
+        const msPerDay = 86400000;
+        const totalDays = Math.max(1, Math.round(totalDuration / msPerDay));
+        const elapsedDays = Math.min(totalDays, Math.max(0, Math.floor((nowMs - startMs) / msPerDay)));
+        const remainingDays = Math.max(0, Math.ceil((deadlineMs - nowMs) / msPerDay));
+
+        document.getElementById('stat-days-elapsed').textContent = elapsedDays;
+        document.getElementById('stat-total-days').textContent = totalDays;
+        document.getElementById('stat-days-remaining').textContent = remainingDays;
+        document.getElementById('stat-days-remaining-inline').textContent = `${remainingDays}D LEFT`;
+      }
+
+      // ======================================================================
+      // RENDER HERO METADATA, DAILY FOCUS & MILESTONE TIMELINE
+      // ======================================================================
+      function renderHeroMeta() {
+        document.getElementById('hero-goal-title').textContent = state.goalTitle;
+        document.getElementById('hero-goal-subtitle').textContent = state.goalSubtitle;
+        document.getElementById('hero-deadline-formatted').textContent = formatLongDeadline(state.deadlineISO);
+      }
+
+      function renderDailyFocus() {
+        const btn = document.getElementById('btn-toggle-daily-task');
+        const checkIcon = document.getElementById('daily-task-check-icon');
+        const titleEl = document.getElementById('daily-task-title');
+        const noteEl = document.getElementById('daily-task-note');
+        const statusEl = document.getElementById('daily-focus-status-text');
+        const streakEl = document.getElementById('daily-streak-badge');
+
+        titleEl.textContent = state.dailyFocus.title;
+        noteEl.textContent = state.dailyFocus.note || '"Small progress is still progress."';
+
+        const done = Boolean(state.dailyFocus.completed);
+        const daysCount = state.dailyFocus.completedDaysCount || 0;
+        btn.setAttribute('aria-checked', String(done));
+        streakEl.textContent = `${daysCount} DAY${daysCount === 1 ? '' : 'S'} LOGGED`;
+
+        if (done) {
+          btn.style.backgroundColor = 'var(--success)';
+          btn.style.borderColor = 'var(--success)';
+          checkIcon.classList.remove('opacity-0');
+          titleEl.style.textDecoration = 'line-through';
+          titleEl.style.opacity = '0.58';
+          statusEl.textContent = 'Completed today — well done';
+          statusEl.style.color = 'var(--success)';
+        } else {
+          btn.style.backgroundColor = 'transparent';
+          btn.style.borderColor = 'var(--accent)';
+          checkIcon.classList.add('opacity-0');
+          titleEl.style.textDecoration = 'none';
+          titleEl.style.opacity = '1';
+          statusEl.textContent = 'Intentional focus active';
+          statusEl.style.color = 'var(--text-secondary)';
+        }
+      }
+
+      function getRelativeDaysLabel(yyyyMmDd) {
+        const todayMid = new Date();
+        todayMid.setHours(0, 0, 0, 0);
+        const targetMid = parseLocalDate(yyyyMmDd);
+        const diffDays = Math.round((targetMid.getTime() - todayMid.getTime()) / 86400000);
+        if (diffDays > 1) return `in ${diffDays}d`;
+        if (diffDays === 1) return 'tomorrow';
+        if (diffDays === 0) return 'today';
+        return `${Math.abs(diffDays)}d ago`;
+      }
+
+      function renderMilestones() {
+        // Sort milestones chronologically by target date
+        state.milestones.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+        const total = state.milestones.length;
+        const completedCount = state.milestones.filter((m) => m.completed).length;
+        const completionPct = total === 0 ? 0 : Math.round((completedCount / total) * 100);
+
+        // Update separate Milestone Completion Progress card
+        document.getElementById('milestone-completion-pct').textContent = `${completionPct}%`;
+        document.getElementById('milestone-fraction-label').textContent =
+          total === 0
+            ? 'No chapters defined'
+            : `${completedCount} of ${total} chapter${total === 1 ? '' : 's'} completed`;
+
+        const segmentedTrack = document.getElementById('milestone-segmented-track');
+        segmentedTrack.innerHTML = '';
+        segmentedTrack.style.gridTemplateColumns = `repeat(${Math.max(1, total)}, minmax(0, 1fr))`;
+
+        if (total === 0) {
+          const emptySeg = document.createElement('div');
+          emptySeg.className = 'h-2 rounded-full';
+          emptySeg.style.backgroundColor = 'var(--track-bg)';
+          segmentedTrack.appendChild(emptySeg);
+        } else {
+          state.milestones.forEach((m) => {
+            const seg = document.createElement('div');
+            seg.className = 'h-2 rounded-full transition-colors duration-500';
+            seg.style.backgroundColor = m.completed ? 'var(--success)' : 'var(--track-bg)';
+            segmentedTrack.appendChild(seg);
+          });
+        }
+
+        // Identify the immediate next incomplete milestone ("Current")
+        const nextIndex = state.milestones.findIndex((m) => !m.completed);
+        const nextMilestone = nextIndex !== -1 ? state.milestones[nextIndex] : null;
+
+        // Render "YOUR NEXT MILESTONE" Spotlight
+        const badgeEl = document.getElementById('next-milestone-countdown-badge');
+        const idxEl = document.getElementById('next-milestone-index');
+        const titleEl = document.getElementById('next-milestone-title');
+        const descEl = document.getElementById('next-milestone-desc');
+        const dateEl = document.getElementById('next-milestone-date');
+
+        if (nextMilestone) {
+          const numStr = String(nextIndex + 1).padStart(2, '0');
+          idxEl.textContent = `CHAPTER ${numStr} • UP NEXT`;
+          titleEl.textContent = `${numStr} — ${nextMilestone.title}`;
+          descEl.textContent = nextMilestone.description || 'Intentional checkpoint along your journey.';
+          dateEl.textContent = formatShortMilestoneDate(nextMilestone.date);
+
+          const todayMid = new Date();
+          todayMid.setHours(0, 0, 0, 0);
+          const targetMid = parseLocalDate(nextMilestone.date);
+          const diffDays = Math.round((targetMid.getTime() - todayMid.getTime()) / 86400000);
+
+          if (diffDays > 1) {
+            badgeEl.textContent = `IN ${diffDays} DAYS`;
+          } else if (diffDays === 1) {
+            badgeEl.textContent = 'TOMORROW';
+          } else if (diffDays === 0) {
+            badgeEl.textContent = 'TODAY';
+          } else {
+            badgeEl.textContent = `${Math.abs(diffDays)}D PAST TARGET`;
+          }
+          badgeEl.style.backgroundColor = 'var(--accent-soft)';
+          badgeEl.style.color = 'var(--accent)';
+        } else {
+          idxEl.textContent = 'ALL CHAPTERS COMPLETE';
+          titleEl.textContent = total > 0 ? 'Every Milestone Achieved' : 'Begin Your Journey';
+          descEl.textContent =
+            total > 0
+              ? 'You have fulfilled every checkpoint on your timeline.'
+              : 'Add your first milestone below to map your path.';
+          dateEl.textContent = formatShortMilestoneDate(toLocalDateInput(new Date(state.deadlineISO)));
+          badgeEl.textContent = '100% COMPLETE';
+          badgeEl.style.backgroundColor = 'var(--success-soft)';
+          badgeEl.style.color = 'var(--success)';
+        }
+
+        // Render Vertical Milestone Journey Timeline
+        const listEl = document.getElementById('milestone-timeline-list');
+        listEl.innerHTML = '';
+
+        if (total === 0) {
+          listEl.innerHTML = `
+            <div class="py-10 text-center">
+              <p class="font-serif-editorial italic text-lg" style="color: var(--text-secondary);">
+                Your timeline awaits its first checkpoint.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        state.milestones.forEach((ms, idx) => {
+          const isCompleted = Boolean(ms.completed);
+          const isCurrent = idx === nextIndex;
+          const chapterNum = String(idx + 1).padStart(2, '0');
+          const isLast = idx === total - 1;
+          const isJustCompleted = ms.id === lastCompletedMilestoneId;
+
+          const item = document.createElement('div');
+          item.className = `relative pl-10 sm:pl-12 ${isLast ? 'pb-1' : 'pb-7'} group transition-all duration-300`;
+          item.dataset.milestoneId = ms.id;
+
+          // Vertical Connecting Hairline
+          if (!isLast) {
+            const line = document.createElement('div');
+            line.className = 'absolute left-[13px] sm:left-[15px] top-8 bottom-0 w-[1px]';
+            line.style.backgroundColor = isCompleted ? 'var(--success)' : 'var(--hairline-strong)';
+            item.appendChild(line);
+          }
+
+          // Node Indicator Button (Toggle Completion with SVG stroke draw)
+          const nodeBtn = document.createElement('button');
+          nodeBtn.type = 'button';
+          nodeBtn.title = isCompleted ? 'Mark as incomplete' : 'Mark milestone complete';
+          nodeBtn.setAttribute('aria-label', `${isCompleted ? 'Unmark' : 'Complete'} milestone ${ms.title}`);
+          nodeBtn.className =
+            `absolute left-0 top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${isJustCompleted ? 'celebrate-pulse' : ''}`;
+
+          if (isCompleted) {
+            nodeBtn.style.backgroundColor = 'var(--success)';
+            nodeBtn.style.border = '1.5px solid var(--success)';
+            nodeBtn.innerHTML = `
+              <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline class="${isJustCompleted ? 'check-draw-path' : ''}" points="20 6 9 17 4 12"></polyline>
+              </svg>
+            `;
+          } else if (isCurrent) {
+            nodeBtn.style.backgroundColor = 'var(--bg-surface)';
+            nodeBtn.style.border = '2px solid var(--accent)';
+            nodeBtn.innerHTML = `<span class="w-2 h-2 rounded-full" style="background-color: var(--accent);"></span>`;
+          } else {
+            nodeBtn.style.backgroundColor = 'var(--bg-surface)';
+            nodeBtn.style.border = '1.5px solid var(--hairline-strong)';
+          }
+
+          nodeBtn.addEventListener('click', () => toggleMilestoneCompletion(ms.id));
+          item.appendChild(nodeBtn);
+
+          // Content Container
+          const card = document.createElement('div');
+          card.className = 'rounded-xl p-4 sm:p-5 transition-all duration-300';
+          if (isCurrent) {
+            card.style.backgroundColor = 'var(--accent-soft)';
+            card.style.border = '1px solid rgba(184, 155, 104, 0.35)';
+          } else {
+            card.style.border = '1px solid var(--hairline)';
+            card.style.backgroundColor = isCompleted ? 'transparent' : 'var(--bg-primary)';
+          }
+
+          const isConfirmingDelete = pendingDeleteId === ms.id;
+          const relDays = !isCompleted ? ` (${getRelativeDaysLabel(ms.date)})` : '';
+
+          card.innerHTML = `
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-2 min-w-0">
+                <span class="text-[11px] font-medium tracking-[0.18em] uppercase tabular-nums"
+                  style="color: ${isCompleted ? 'var(--success)' : isCurrent ? 'var(--accent)' : 'var(--text-secondary)'};">
+                  ${chapterNum}
+                </span>
+                <span style="color: var(--text-tertiary);">—</span>
+                <h3 class="font-serif-editorial text-lg sm:text-xl tracking-wide ${isCompleted ? 'line-through opacity-65' : ''}">
+                  ${escapeHtml(ms.title)}
+                </h3>
+                ${
+                  isCurrent
+                    ? `<span class="px-2 py-0.5 rounded-full text-[9px] font-semibold tracking-[0.16em] uppercase" style="background-color: var(--accent); color: #FFFFFF;">CURRENT</span>`
+                    : ''
+                }
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="text-[11px] tracking-[0.12em] uppercase tabular-nums" style="color: var(--text-secondary);">
+                  ${formatShortMilestoneDate(ms.date)}${escapeHtml(relDays)}
+                </span>
+
+                <!-- Edit & Delete Controls -->
+                <div class="flex items-center gap-1 ml-1">
+                  <button
+                    type="button"
+                    data-action="edit"
+                    class="p-2 rounded-lg opacity-70 hover:opacity-100 transition-opacity"
+                    title="Edit milestone"
+                    aria-label="Edit milestone ${escapeHtml(ms.title)}"
+                  >
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    type="button"
+                    data-action="delete"
+                    class="px-2.5 py-1.5 rounded-lg text-[10px] tracking-wider uppercase transition-all ${
+                      isConfirmingDelete
+                        ? 'bg-red-600 text-white opacity-100'
+                        : 'opacity-65 hover:opacity-100'
+                    }"
+                    title="Delete milestone"
+                    aria-label="Delete milestone ${escapeHtml(ms.title)}"
+                  >
+                    ${isConfirmingDelete ? 'Confirm' : '×'}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            ${
+              ms.description
+                ? `<p class="mt-1.5 text-xs sm:text-[13px] font-light leading-relaxed ${isCompleted ? 'opacity-60' : ''}" style="color: var(--text-secondary);">
+                    ${escapeHtml(ms.description)}
+                  </p>`
+                : ''
+            }
+          `;
+
+          card.querySelector('[data-action="edit"]').addEventListener('click', () => openMilestoneModal(ms));
+          card.querySelector('[data-action="delete"]').addEventListener('click', () => handleDeleteMilestone(ms.id));
+
+          item.appendChild(card);
+          listEl.appendChild(item);
+        });
+
+        if (lastCompletedMilestoneId) {
+          setTimeout(() => {
+            lastCompletedMilestoneId = null;
+          }, 1000);
+        }
+      }
+
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      // ======================================================================
+      // MILESTONE INTERACTIONS (Complete, Add, Edit, Delete)
+      // ======================================================================
+      function toggleMilestoneCompletion(id) {
+        const target = state.milestones.find((m) => m.id === id);
+        if (!target) return;
+        target.completed = !target.completed;
+        pendingDeleteId = null;
+        lastCompletedMilestoneId = target.completed ? id : null;
+        saveState(target.completed ? `Completed: ${target.title}` : `Reopened: ${target.title}`);
+        renderMilestones();
+      }
+
+      function handleDeleteMilestone(id) {
+        if (pendingDeleteId !== id) {
+          pendingDeleteId = id;
+          renderMilestones();
+          setTimeout(() => {
+            if (pendingDeleteId === id) {
+              pendingDeleteId = null;
+              renderMilestones();
+            }
+          }, 3500);
+          return;
+        }
+        state.milestones = state.milestones.filter((m) => m.id !== id);
+        pendingDeleteId = null;
+        saveState('Milestone removed');
+        renderMilestones();
+      }
+
+      // Milestone Modal Controls
+      const milestoneModal = document.getElementById('milestone-modal');
+      const milestoneForm = document.getElementById('milestone-form');
+
+      function openMilestoneModal(existingMilestone) {
+        pendingDeleteId = null;
+        document.getElementById('milestone-modal-title').textContent = existingMilestone
+          ? 'Edit Milestone'
+          : 'Add Milestone';
+        document.getElementById('ms-edit-id').value = existingMilestone ? existingMilestone.id : '';
+        document.getElementById('ms-title').value = existingMilestone ? existingMilestone.title : '';
+        document.getElementById('ms-date').value = existingMilestone
+          ? existingMilestone.date
+          : toLocalDateInput(new Date());
+        document.getElementById('ms-desc').value = existingMilestone ? existingMilestone.description : '';
+        milestoneModal.classList.remove('hidden');
+        document.getElementById('ms-title').focus();
+      }
+
+      function closeMilestoneModal() {
+        milestoneModal.classList.add('hidden');
+      }
+
+      document.getElementById('btn-add-milestone').addEventListener('click', () => openMilestoneModal(null));
+      document.getElementById('btn-close-milestone-modal').addEventListener('click', closeMilestoneModal);
+      document.getElementById('btn-cancel-milestone').addEventListener('click', closeMilestoneModal);
+
+      milestoneModal.addEventListener('click', (e) => {
+        if (e.target === milestoneModal) closeMilestoneModal();
+      });
+
+      milestoneForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('ms-edit-id').value;
+        const title = document.getElementById('ms-title').value.trim().toUpperCase();
+        const date = document.getElementById('ms-date').value;
+        const description = document.getElementById('ms-desc').value.trim();
+
+        if (!title || !date) return;
+
+        if (editId) {
+          const ms = state.milestones.find((m) => m.id === editId);
+          if (ms) {
+            ms.title = title;
+            ms.date = date;
+            ms.description = description;
+          }
+          saveState('Milestone updated');
+        } else {
+          state.milestones.push({
+            id: 'ms-' + Date.now(),
+            title,
+            date,
+            description,
+            completed: false
+          });
+          saveState('Milestone added');
+        }
+
+        closeMilestoneModal();
+        renderMilestones();
+      });
+
+      // ======================================================================
+      // DAILY FOCUS ("TODAY MATTERS") INTERACTIONS
+      // ======================================================================
+      document.getElementById('btn-toggle-daily-task').addEventListener('click', () => {
+        const nextVal = !state.dailyFocus.completed;
+        state.dailyFocus.completed = nextVal;
+        state.dailyFocus.lastActiveDate = toLocalDateInput(new Date());
+        if (nextVal) {
+          state.dailyFocus.completedDaysCount = (state.dailyFocus.completedDaysCount || 0) + 1;
+        } else {
+          state.dailyFocus.completedDaysCount = Math.max(0, (state.dailyFocus.completedDaysCount || 1) - 1);
+        }
+        saveState(nextVal ? 'Today’s intention completed' : 'Daily intention reopened');
+        renderDailyFocus();
+      });
+
+      const dailyView = document.getElementById('daily-focus-view');
+      const dailyForm = document.getElementById('daily-focus-form');
+
+      function openDailyFocusEditor(focusNote) {
+        document.getElementById('input-daily-title').value = state.dailyFocus.title;
+        document.getElementById('input-daily-note').value = state.dailyFocus.note;
+        dailyView.classList.add('hidden');
+        dailyForm.classList.remove('hidden');
+        if (focusNote) {
+          document.getElementById('input-daily-note').focus();
+        } else {
+          document.getElementById('input-daily-title').focus();
+        }
+      }
+
+      document.getElementById('btn-edit-daily-focus').addEventListener('click', () => openDailyFocusEditor(false));
+      document.getElementById('daily-task-title').addEventListener('click', () => openDailyFocusEditor(false));
+      document.getElementById('daily-task-note').addEventListener('click', () => openDailyFocusEditor(true));
+
+      document.getElementById('btn-cancel-daily-focus').addEventListener('click', () => {
+        dailyForm.classList.add('hidden');
+        dailyView.classList.remove('hidden');
+      });
+
+      dailyForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newTitle = document.getElementById('input-daily-title').value.trim();
+        const newNote = document.getElementById('input-daily-note').value.trim();
+        if (!newTitle) return;
+        state.dailyFocus.title = newTitle;
+        state.dailyFocus.note = newNote || '"Small progress is still progress."';
+        saveState('Today’s intention saved');
+        dailyForm.classList.add('hidden');
+        dailyView.classList.remove('hidden');
+        renderDailyFocus();
+      });
+
+      // ======================================================================
+      // GOAL & HORIZON CONFIGURATION MODAL & PRESET TEMPLATES
+      // ======================================================================
+      const settingsModal = document.getElementById('settings-modal');
+      const settingsForm = document.getElementById('settings-form');
+      const validationMsg = document.getElementById('cfg-validation-msg');
+
+      const CHAPTER_PRESETS = {
+        studio: {
+          title: 'THE NEXT CHAPTER',
+          subtitle: 'Publish the first edition & launch the independent design studio',
+          daysSpan: 180,
+          daysElapsed: 38
+        },
+        marathon: {
+          title: 'BERLIN 42.2 KM',
+          subtitle: 'Sub-3:15 marathon preparation — disciplined miles, recovery & focus',
+          daysSpan: 112,
+          daysElapsed: 24
+        },
+        sabbatical: {
+          title: 'YEAR OF MASTERY',
+          subtitle: 'Complete architectural residency, research monograph & exhibition',
+          daysSpan: 365,
+          daysElapsed: 72
+        }
+      };
+
+      document.querySelectorAll('.preset-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const preset = CHAPTER_PRESETS[btn.dataset.preset];
+          if (!preset) return;
+          const now = new Date();
+          const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - preset.daysElapsed, 9, 0, 0, 0);
+          const deadline = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() + (preset.daysSpan - preset.daysElapsed),
+            9,
+            0,
+            0,
+            0
+          );
+          document.getElementById('cfg-goal-title').value = preset.title;
+          document.getElementById('cfg-goal-subtitle').value = preset.subtitle;
+          document.getElementById('cfg-start-date').value = toLocalDateTimeInput(start);
+          document.getElementById('cfg-deadline-date').value = toLocalDateTimeInput(deadline);
+          document.getElementById('cfg-recalibrate-milestones').checked = true;
+          validationMsg.classList.add('hidden');
+        });
+      });
+
+      function openSettingsModal() {
+        document.getElementById('cfg-goal-title').value = state.goalTitle;
+        document.getElementById('cfg-goal-subtitle').value = state.goalSubtitle;
+        document.getElementById('cfg-start-date').value = toLocalDateTimeInput(new Date(state.startISO));
+        document.getElementById('cfg-deadline-date').value = toLocalDateTimeInput(new Date(state.deadlineISO));
+        document.getElementById('cfg-recalibrate-milestones').checked = false;
+        validationMsg.classList.add('hidden');
+        settingsModal.classList.remove('hidden');
+      }
+
+      function closeSettingsModal() {
+        settingsModal.classList.add('hidden');
+      }
+
+      document.getElementById('btn-open-settings').addEventListener('click', openSettingsModal);
+      document.getElementById('btn-begin-next-chapter').addEventListener('click', openSettingsModal);
+      document.getElementById('btn-close-settings').addEventListener('click', closeSettingsModal);
+      document.getElementById('btn-cancel-settings').addEventListener('click', closeSettingsModal);
+
+      settingsModal.addEventListener('click', (e) => {
+        if (e.target === settingsModal) closeSettingsModal();
+      });
+
+      settingsForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('cfg-goal-title').value.trim().toUpperCase();
+        const subtitle = document.getElementById('cfg-goal-subtitle').value.trim();
+        const startVal = document.getElementById('cfg-start-date').value;
+        const deadlineVal = document.getElementById('cfg-deadline-date').value;
+        const recalibrate = document.getElementById('cfg-recalibrate-milestones').checked;
+
+        const startDate = parseLocalDateTime(startVal);
+        const deadlineDate = parseLocalDateTime(deadlineVal);
+
+        if (!title || isNaN(startDate.getTime()) || isNaN(deadlineDate.getTime())) {
+          validationMsg.textContent = 'Please provide a valid title, start date, and target deadline.';
+          validationMsg.classList.remove('hidden');
+          return;
+        }
+
+        if (deadlineDate.getTime() <= startDate.getTime()) {
+          validationMsg.textContent = 'The target deadline must be after the journey start date.';
+          validationMsg.classList.remove('hidden');
+          return;
+        }
+
+        state.goalTitle = title;
+        state.goalSubtitle = subtitle;
+        state.startISO = startDate.toISOString();
+        state.deadlineISO = deadlineDate.toISOString();
+
+        if (recalibrate) {
+          const span = deadlineDate.getTime() - startDate.getTime();
+          const atRatio = (r) => toLocalDateInput(new Date(startDate.getTime() + span * r));
+          state.milestones = [
+            {
+              id: 'ms-' + Date.now() + '-1',
+              title: 'THE BEGINNING',
+              date: atRatio(0.05),
+              description: 'Establish your foundation, intent, and initial momentum.',
+              completed: false
+            },
+            {
+              id: 'ms-' + Date.now() + '-2',
+              title: 'FIRST BREAKTHROUGH',
+              date: atRatio(0.28),
+              description: 'Reach your first tangible proof of progress.',
+              completed: false
+            },
+            {
+              id: 'ms-' + Date.now() + '-3',
+              title: 'HALF-WAY POINT',
+              date: atRatio(0.50),
+              description: 'Audit your trajectory and refine execution.',
+              completed: false
+            },
+            {
+              id: 'ms-' + Date.now() + '-4',
+              title: 'FINAL PREPARATION',
+              date: atRatio(0.82),
+              description: 'Complete final polish and readiness checks.',
+              completed: false
+            },
+            {
+              id: 'ms-' + Date.now() + '-5',
+              title: 'THE BIG DAY',
+              date: toLocalDateInput(deadlineDate),
+              description: 'Arrive at your horizon with clarity and pride.',
+              completed: false
+            }
+          ];
+        }
+
+        saveState('Horizon updated');
+        closeSettingsModal();
+        renderHeroMeta();
+        renderMilestones();
+        updateLiveTimepiece();
+      });
+
+      document.getElementById('btn-reset-defaults').addEventListener('click', () => {
+        const currentTheme = state.theme;
+        state = createDefaultState();
+        state.theme = currentTheme;
+        saveState('Restored editorial defaults');
+        closeSettingsModal();
+        renderHeroMeta();
+        renderDailyFocus();
+        renderMilestones();
+        updateLiveTimepiece();
+      });
+
+      // ======================================================================
+      // INITIALIZATION & PRECISION TICK LOOP
+      // ======================================================================
+      applyTheme(state.theme);
+      renderHeroMeta();
+      renderDailyFocus();
+      renderMilestones();
+      updateLiveTimepiece();
+
+      // Synchronize tick alignment smoothly
+      setInterval(updateLiveTimepiece, 250);
+    })();
+  </script>
+</body>
+</html>
